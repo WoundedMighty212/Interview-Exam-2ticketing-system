@@ -1,0 +1,39 @@
+﻿<!-- Views/Bug/Index.cshtml -->
+@model IEnumerable<Bug>
+
+<h1>Bugs</h1>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Bug</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Summary</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Summary)</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.BugId })">Edit</a> |
+                    <a href="@Url.Action("Delete", new { id = item.BugId })">Delete</a> |
+                    @if (item.Status == "Open")
+                    {
+                            <form action="@Url.Action("Resolve", new { id = item.BugId })" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-link">Resolve</button>
+                            </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
